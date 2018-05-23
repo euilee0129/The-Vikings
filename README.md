@@ -14,7 +14,12 @@ this.addObject( life, 50, 50 );
 
 
 Life:
-
+private int heart;
+    
+    public Life()
+    {
+        heart = 1;//1 Hit point
+    }
 
 
 
