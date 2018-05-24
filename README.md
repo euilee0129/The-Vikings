@@ -23,6 +23,19 @@ private int heart;
 
 something turning:
 
+int rotationalSpeed = 1;
+int radius = 200; // adjust as needed
+ 
+public void orbitWorldCenter()
+{
+    setLocation(getWorld().getWidth()/2, getWorld().getHeight()/2);
+    turn(rotationalSpeed-90);
+    move(radius);
+    turn(90);
+}
+
+
+
 public void act() 
    {
        int cx = getWorld().getWidth()/2;
@@ -36,5 +49,7 @@ public void act()
        move (speed);
         
    }
+
+
 
 
