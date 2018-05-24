@@ -21,6 +21,20 @@ private int heart;
         heart = 1;//1 Hit point
     }
 
+something turning:
 
+public void act() 
+   {
+       int cx = getWorld().getWidth()/2;
+       int cy = getWorld().getHeight()/2;
+       int speed= 5;
+        
+       turnTowards(cx,cy);
+       int rotation = getRotation();
+        
+       setRotation(rotation + 89);
+       move (speed);
+        
+   }
 
 
