@@ -244,38 +244,38 @@ Viking player1 = new Viking();
     }
     
     Viking:
-    public class Viking extends Actor
-{
-    private int verticalSpeed = 0;
-    private int speed = 3;
-    private int countJump;
-    private boolean jumping = false;
-    /**
-     * Act - do whatever the Viking wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
+     public class Viking extends Actor
+      {
+      private int verticalSpeed = 0;
+       private int speed = 3;
+        private int countJump;
+        private boolean jumping = false;
+     /**
+      * Act - do whatever the Viking wants to do. This method is called whenever
+      * the 'Act' or 'Run' button gets pressed in the environment.
+      */
+     public void act() 
+     {
         checkFall();
         checkKeys();
-    }  
+     }  
       public void jump() 
-    {
+      {
         verticalSpeed = -15;
         fall();
-    }
-    public void fall()
-    {
+      }
+      public void fall()
+      {
         setLocation(getX(), getY() + verticalSpeed);
         verticalSpeed++;
-    }
-    public boolean onGround()
-    {
+      }
+      public boolean onGround()
+      {
         Actor under = getOneObjectAtOffset( 0, getImage().getHeight()/2, Ship.class );
         return under != null;
-    }
-    public void checkFall()
-    {
+        }
+     public void checkFall()
+     {
         if(onGround() )
         {
             verticalSpeed = 0;
@@ -284,17 +284,17 @@ Viking player1 = new Viking();
         {
             fall();
         }
-    }
-    public void moveForward()
-    {
+     }
+     public void moveForward()
+     {
         setLocation(getX() + speed, getY() );
-    }
-    public void moveBack()
-    {
+     }
+     public void moveBack()
+        {
         setLocation(getX() - speed, getY() );
-    }
-    public void checkKeys()
-    {
+        }
+     public void checkKeys()
+     {
         if( Greenfoot.isKeyDown("up") )
         {
             doubleJump();
@@ -307,9 +307,9 @@ Viking player1 = new Viking();
         {
             moveForward();
         }
-    }
-    public void doubleJump()
-    {
+      }
+      public void doubleJump()
+     {
         if(countJump >= 2 && onGround() )
         {
            countJump = 0;
@@ -326,33 +326,34 @@ Viking player1 = new Viking();
             jump();
             countJump++;
         }
+      }
     }
-}
-Ship:
-public class Ship extends Actor
-{
-    private int speed = 3;
-    private Actor player;
-    /**
-     * Act - do whatever the Ship wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
+    Ship:
+
+
+    public class Ship extends Actor
     {
-        move();
-        playerOn();
-    }    
-    public void move()
-    {
-        if(isAtEdge() )
-        {
+      private int speed = 3;
+       /**
+       * Act - do whatever the Ship wants to do. This method is called whenever
+       * the 'Act' or 'Run' button gets pressed in the environment.
+       */
+       public void act() 
+      {
+         move();
+         playerOn();
+     }    
+       public void move()
+     {
+         if(isAtEdge() )
+         {
                 speed = -speed;
         }
         setLocation(getX() + speed, getY() );
-    }
-    public void playerOn()//does not work yet
-    {
-        player = getOneIntersectingObject(Viking.class);
+     }
+        public void playerOn() //WORKS 
+     {
+        Actor player = getOneIntersectingObject(Viking.class);
         if(this.isTouching(Viking.class) && player != null)
         {
             player.setLocation(player.getX() + speed, player.getY() );
