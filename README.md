@@ -243,7 +243,7 @@ Viking player1 = new Viking();
         }
     }
     
-    Viking:
+  Viking:
      public class Viking extends Actor
       {
       private int verticalSpeed = 0;
