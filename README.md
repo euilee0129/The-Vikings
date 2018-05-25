@@ -112,5 +112,133 @@ private ArrayList<Actor> health = new ArrayList<Actor>();
     }
 
 
+Axe:
 
+Viking player1 = new Viking();
+    Valkyrie player2 = new Valkyrie();
+    ArrayList<Life> p2= new ArrayList<Life>();
+    private int countDamage = 0 ;
+    public Axe()
+    {
+        Life life1 = new Life();
+        Life life2 = new Life();
+        Life life3 = new Life();
+        p2.add(life1);
+        p2.add(life2);
+        p2.add(life3);
+    }
 
+    /**
+     * Act - do whatever the Axe wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public void act() 
+    {
+        //throwAxe();
+        arch();
+        if( thrown == true )
+        {
+            Greenfoot.stop();
+        }
+        Greenfoot.start();
+    } 
+
+    private int takeDamage()
+    { 
+        int count = 0;
+        if(isTouching(Valkyrie.class) )
+        {
+            count++;
+        }
+        return count;
+    }
+
+    public void location()
+    {
+        setLocation(player1.getX(), player1.getY() );
+    }
+
+    public void damage()
+    {
+        if(takeDamage() != 0)
+        {
+            while( countDamage > 0 )
+            {
+                World world = getWorld();
+                world.removeObject(p2.get(countDamage) );
+                countDamage--;
+
+            }
+
+        }
+    }
+    private boolean thrown = false;
+    public void throwAxe()
+    {
+        if( this.isTouching( Valkyrie.class ) == false )
+        {
+            if( Greenfoot.isKeyDown("l") )
+            {
+                if( thrown == false )
+                {
+                    setRotation(90);
+                    setLocation(player2.getX(), player2.getY());
+                    thrown = true;
+                }
+                else
+                {
+                    setLocation( player1.getX(), player1.getY() );
+                }
+            }
+        }
+        else
+        {
+            damage();
+        }
+
+    }
+
+    private double posx, posy, vx, vy, ax, ay, dt=0.1;
+    public void addedToWorld( World MyWorld )
+    {
+        posx = getX();
+        posy = getY();
+
+        ax= 0;
+        ay= 10;
+
+        vx= 100;
+        vy=-60;
+
+    }
+
+    public void arch()
+    {
+        if( Greenfoot.isKeyDown("l") )
+        {
+            posx += vx*dt+0.5*ax*dt*dt;
+            posy += vy*dt+0.5*ay*dt*dt;
+
+            vx+= ax*dt;
+            vy+= ay*dt;
+
+            setLocation((int)posx, (int)posy );
+            if( isAtEdge() == true && isTouching( Valkyrie.class) == false )
+            {
+                setLocation(player1.getX()+10, player1.getY() );
+            }
+            else
+            {
+                if(isTouching(Valkyrie.class) )
+                {
+                    damage();
+                    Greenfoot.stop();
+
+                }
+                else
+                {
+                    Greenfoot.start();
+                }
+            }
+        }
+    }
