@@ -254,3 +254,10 @@ Viking player1 = new Viking();
         }
     }
 }
+
+
+we should have a "death" methods
+look into ur greensfoot books and look for the spaceship one for "shooting" out axes and then we can play with the settings
+
+
+
