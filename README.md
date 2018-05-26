@@ -255,9 +255,45 @@ Viking player1 = new Viking();
     }
 }
 
+public class MyWorld extends World
+{
 
-we should have a "death" methods
-look into ur greensfoot books and look for the spaceship one for "shooting" out axes and then we can play with the settings
+    /**
+     * Constructor for objects of class MyWorld.
+     * 
+     */
+    public MyWorld()
+    {    
+        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        super(1150, 600, 1);
+        Actor vikinglife = new Life(); //1st heart
+        this.addObject( vikinglife, 40, 40 );//differences of 50
+        
+        Actor vikinglife1 = new Life(); //2nd heart
+        this.addObject( vikinglife1, 90, 40 );
+        
+        Actor vikinglife2 = new Life(); //3rd heart
+        this.addObject( vikinglife2, 140, 40 );
 
-
+        
+        Actor valkyrielife = new Life(); //1st heart
+        this.addObject( valkyrielife, 1010, 40 );//differences of 50
+        
+        Actor valkyrielife1 = new Life(); //2nd heart
+        this.addObject( valkyrielife1, 1060, 40 );
+        
+        Actor valkyrielife2 = new Life(); //3rd heart
+        this.addObject( valkyrielife2, 1110, 40 );
+        
+        Axe axe = new Axe();
+        addObject( axe, 100, getHeight()-100 );
+        addObject( new Viking(), 200, getHeight()-200 );
+        addObject( new Valkyrie(), 300, getHeight()-200 );
+        //addObject( new Ship(), getObjectsAt( 200, getHeight()-200, Viking.class).getX(), getObjectsAt( 200, getHeight()-200, Viking.class).getY(), Ship.class );
+        addObject( new Ship(), 150, getHeight()-150 );
+        
+    }
+    
+    
+}
 
