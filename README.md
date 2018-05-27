@@ -203,5 +203,24 @@ We'll start commenting once we finish
         
     -----------------------------------------------------------------------------------------------------------------------
         
-        
-        Hello World
+         private static final int AxeReloadTime = 5;        
+    private int reloadDelayCount;
+    public Viking()
+    {
+        reloadDelayCount = 5;
+    }
+    /**
+     * Throw axe when ready
+     */
+    private void fire() 
+    {
+        if (reloadDelayCount >= AxeReloadTime) 
+        {
+            Axe axe = new Axe();
+            getWorld().addObject( axe, getX(), getY() );
+            axe.arch();
+            reloadDelayCount = 0;
+        }
+    }
+
+
