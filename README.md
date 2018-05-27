@@ -1,6 +1,10 @@
 # The-Vikings
 Ap computer science final Greenfoot game
 
+P.S. using the blame button above the edit button lets u see time stamps of who did what to "blame" anyone lol
+and using branches u can request a pull request, it's actually pretty easy
+
+
 I'll do world, life, and axe
 
 you help me on life, find pictures that fit, u might have to edit sizes and stuff, and add sound effect
