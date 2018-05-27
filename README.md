@@ -265,3 +265,16 @@ public class LifeEater extends Actor
         }
         return false;
     }
+    
+    
+    
+    
+    
+        public boolean hit()
+    {
+        if(this.isTouching(Axe.class) )
+        {
+            return true;
+        }
+        return false;
+    }
