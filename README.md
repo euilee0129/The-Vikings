@@ -222,5 +222,14 @@ We'll start commenting once we finish
             reloadDelayCount = 0;
         }
     }
-
+    public void removeLife()
+    {
+        World world = getWorld();
+        int x = 1010;
+        if(isTouching(Axe.class) )
+        {
+            world.removeObject(getOneObjectAtOffset(x , 40, Life.class) );
+            x += 50;
+        }
+    }
 
