@@ -180,6 +180,26 @@ We'll start commenting once we finish
             }
         }
     }
+    public class Ocean extends Actor
+{
+    private World world = getWorld();
+    /**
+     * Act - do whatever the Ocean wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public void act() 
+    {   
+        remove();
+    }    
+
+    public void remove()
+    { 
+        if(this.isTouching(null) )
+        {
+            this.removeTouching(null);
+        }
+    }
+}
         
     -----------------------------------------------------------------------------------------------------------------------
         
