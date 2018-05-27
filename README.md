@@ -245,28 +245,7 @@ public class LifeEater extends Actor
         // Add your action code here.
         removeLife();
     }    
-    public void removeLife()
-    {
-        if(player.hit() )
-        {
-            move(50);
-        }
-        if( this.isTouching(Life.class) )
-        {
-            this.removeTouching(Life.class);
-        }
-    }
-}
-    public boolean hit()
-    {
-        if(this.isTouching(Axe.class) )
-        {
-            return true;
-        }
-        return false;
-    }
-    
-    
+
     
     
     
@@ -279,21 +258,7 @@ public class LifeEater extends Actor
         return false;
     }
     
-        public void removeLife()
-    {
-        int x = 1010;
-        Actor life = getOneObjectAtOffset(x, 40, Life.class);
-        if(player.hit() )
-        {
-            setLocation(life.getX(), life.getY() );
-            x += 50;
-        }
-        if( this.isTouching(Life.class) )
-        {
-            this.removeTouching(Life.class);
-        }
-    }
-    
+
     
         public void removeLife()
     {
