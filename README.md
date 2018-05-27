@@ -293,3 +293,19 @@ public class LifeEater extends Actor
             this.removeTouching(Life.class);
         }
     }
+    
+    
+        public void removeLife()
+    {
+        int x = 1010;
+        Actor life = getOneObjectAtOffset(x, 40, Life.class);
+        if(player.hit() )
+        {
+            setLocation(life.getX(), life.getY() );
+        }
+        if( this.isTouching(Life.class) )
+        {
+            this.removeTouching(Life.class);
+            x += 50;
+        }
+    }
