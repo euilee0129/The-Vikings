@@ -9,17 +9,7 @@ later find pictures that fit, u might have to edit sizes and stuff, and add soun
 We'll start commenting once we finish
 
     
-        import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.ArrayList;
-/**
- * Viking game's world
- * 
- * @author Samuel Lee and Marc Jung
- * @version 1.0
- */
-public class MyWorld extends World
-{
-    /**
+      /**
      * Constructor for objects of class MyWorld.
      * 
      */
@@ -60,14 +50,7 @@ public class MyWorld extends World
         addObject( new Ocean(), getWidth()/2, 599 );
         Block wall = new Block();
         addObject( wall, getWidth()/2, ship.getY() );
-        ship.act(); ship.isMiddle();
         
-    }
-    public void act()
-    {
-        //removeLife();
-    }
-    
     }
     
     
