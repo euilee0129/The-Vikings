@@ -362,5 +362,152 @@ We'll start commenting once we finish
     
     
     ------------
+    updated vikgin
     
+    
+    import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * The Vikings
+ * 
+ * @author Samuel Lee and Marc Jung 
+ * @version 1.0
+ * 
+ * 
+ */
+public class Viking extends Actor
+{
+    private int verticalSpeed = 0;
+    private int speed = 3;
+    private int countJump;
+    private boolean jumping = false;
+
+    /**
+     * Act - do whatever the Viking wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public void act() 
+    {
+        checkFall();
+        checkKeys();
+        axeDelayCount++;
+    }  
+
+    public void jump() 
+    {
+        verticalSpeed = -15;
+        fall();
+    }
+
+    public void fall()
+    {
+        setLocation(getX(), getY() + verticalSpeed);
+        verticalSpeed++;
+    }
+
+    public boolean onGround()
+    {
+        Actor under = getOneObjectAtOffset( 0, getImage().getHeight()/2, Ship.class );
+        return under != null;
+    }
+
+    public void checkFall()
+    {
+        if(onGround() )
+        {
+            verticalSpeed = 0;
+        }
+        else 
+        {
+            fall();
+        }
+    }
+
+    public void moveForward()
+    {
+        setLocation(getX() + speed, getY() );
+    }
+
+    public void moveBack()
+    {
+        setLocation(getX() - speed, getY() );
+    }
+
+    public void checkKeys()
+    {
+        if( Greenfoot.isKeyDown("up") )
+        {
+            doubleJump();
+        }
+        if( Greenfoot.isKeyDown("left") )
+        {
+            moveBack();
+        }
+        if( Greenfoot.isKeyDown("Right") )
+        {
+            moveForward();
+        }
+        if (Greenfoot.isKeyDown("l")) 
+        {
+            fire();
+        }
+    }
+
+    public void doubleJump()
+    {
+        if(countJump >= 2 && onGround() )
+        {
+            countJump = 0;
+            jumping = false;
+        }
+        if(Greenfoot.isKeyDown("up") && jumping == false )
+        {
+            countJump++;
+            jumping = true;
+            jump();
+        }
+        if(jumping  == true && countJump == 1 )
+        {
+            jump();
+            countJump++;
+        }
+    }
+    private static final int AxeReloadTime = 5;        
+    private int axeDelayCount;
+
+    public void checkNewAxe()
+    {
+        fire();
+        if( axeDelayCount > 0 )
+        {
+            axeDelayCount--;
+            if( axeDelayCount == 0 )
+            {
+                fire();
+            }
+        }
+
+    }
+
+    public Viking()
+    {
+        axeDelayCount = 100;
+    }
+
+    /**
+     * Throw axe when ready
+     */
+    private void fire() 
+    {
+        if ( axeDelayCount >= AxeReloadTime) 
+        {
+            Axe axe = new Axe();
+            getWorld().addObject( axe, getX(), getY() );
+            axe.arch();
+            axeDelayCount = 0;
+        }
+    }
+
+    
+}
   
