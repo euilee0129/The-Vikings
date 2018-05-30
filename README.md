@@ -480,6 +480,140 @@ public class Ocean extends Actor
 
 ----------------
 
+Valk:
 
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
+/**
+ * Write a description of class Valkyrie here.
+ * 
+ * @author Samuel Lee and Marc Jung
+ * @version (a version number or a date)
+ */
+public class Valkyrie extends Actor
+{
+     private int verticalSpeed = 0;
+    private int speed = 3;
+    private int countJump;
+    private boolean jumping = false;
+
+    public void checkFall()
+    {
+        if(onGround() )
+        {
+            verticalSpeed = 0;
+        }
+        else 
+        {
+            fall();
+        }
+    }
+
+    public void checkKeys()
+    {
+        if( Greenfoot.isKeyDown("w") )
+        {
+            doubleJump();
+        }
+        if( Greenfoot.isKeyDown("a") )
+        {
+            moveBack();
+        }
+        if( Greenfoot.isKeyDown("d") )
+        {
+            moveForward();
+        }
+        if (Greenfoot.isKeyDown("space")) 
+        {
+            throwSword();
+        }
+    }
+
+    /**
+     * Act - do whatever the Viking wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public void act() 
+    {
+        checkFall();
+        checkKeys();
+        swordDelayCount++;
+    }  
+    private static final int SwordReloadTime = 30;
+    private int swordDelayCount = 100;
+    /**
+     * Throw axe everytime axeDelayCount reaches axeReloadTime
+     */
+    private void throwSword() 
+    {
+        if ( swordDelayCount >= SwordReloadTime) 
+        {
+            Sword sword = new Sword();
+            getWorld().addObject( sword, getX(), getY() );
+            sword.arch();
+            swordDelayCount = 0;
+        }
+    }
+
+    public void jump() 
+    {
+        verticalSpeed = -15;
+        fall();
+    }
+
+    public void fall()
+    {
+        setLocation(getX(), getY() + verticalSpeed);
+        verticalSpeed++;
+    }
+
+    public boolean onGround()
+    {
+        Actor under = getOneObjectAtOffset( 0, getImage().getHeight()/2, Ship.class );
+        return under != null;
+    }
+
+    public void moveForward()
+    {
+        setLocation(getX() + speed, getY() );
+    }
+
+    public void moveBack()
+    {
+        setLocation(getX() - speed, getY() );
+    }
+
+    public void doubleJump()
+    {
+        if(countJump >= 2 && onGround() )
+        {
+            countJump = 0;
+            jumping = false;
+        }
+        if(Greenfoot.isKeyDown("up") && jumping == false )
+        {
+            countJump++;
+            jumping = true;
+            jump();
+        }
+        if(jumping  == true && countJump == 1 )
+        {
+            jump();
+            countJump++;
+        }
+    }
+    // public void removeLife()
+    // {
+        // World world = getWorld();
+        // int x = 1010;
+        // if(isTouching(Axe.class) )
+        // {
+            // world.removeObject(getOneObjectAtOffset(x , 40, Life.class) );
+            // x += 50;
+        // }
+    // }
+}
+
+-----------------------------
 
 
