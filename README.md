@@ -823,3 +823,47 @@ public class ValkyrieLifeEater extends Actor
         return count;
     }  
 }
+
+Viking
+    /**
+     * Ends game when life points are gone
+     */
+    public void death()
+    {
+        VikingLifeEater eater = new VikingLifeEater(); //Destroy a life when
+        World world0 = getWorld();                         // conditions are met 
+        if(hit() )                                       
+        {
+            world0.addObject(new VikingLifeEater(), vikingX, 40); //position lifeEater to eat life
+            eater.removeLife(); //removes a life when lifeEater touches a life
+            vikingX += 50;
+        }
+        if(eater.returnCount() == 3 ) //ends game when life points are gone
+        {
+            MyWorld world = (MyWorld) getWorld();
+            world.gameOver(); //ends game
+        }
+    }
+    
+    Valkyrie
+    
+    private int valkyrieX = 1010;
+    /**
+     * Ends game when life points are gone
+     */
+    public void death()
+    {                                                        //Destroy a life when
+        World world0 = getWorld(); 
+        ValkyrieLifeEater eater = new ValkyrieLifeEater();                                                     // conditions are met 
+        if(hit() )                                       
+        {
+            world0.addObject(new ValkyrieLifeEater(), valkyrieX, 40);
+            //position lifeEater to eat life
+            valkyrieX += 50;
+        }
+        if(eater.returnCount() == 3 ) //ends game when life points are gone
+        {
+            MyWorld world = (MyWorld) getWorld();
+            world.gameOver(); //ends game
+        }
+    }
