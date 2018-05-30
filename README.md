@@ -511,3 +511,24 @@ public class Viking extends Actor
     
 }
   
+-----------------
+
+inside Viking class:
+
+private static final int AxeReloadTime = 30;
+    private int axeDelayCount = 100;
+    /**
+     * Throw axe everytime axeDelayCount reaches axeReloadTime
+     */
+    private void throwAxe() //for Marc, call throwAxe() inside checkkey for "l" 
+    {
+        if ( axeDelayCount >= AxeReloadTime) 
+        {
+            Axe axe = new Axe();
+            getWorld().addObject( axe, getX(), getY() );
+            axe.arch();
+            axeDelayCount = 0;
+        }
+    }
+
+
