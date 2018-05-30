@@ -68,7 +68,7 @@ public class Viking extends Actor
     private boolean jumping = false; //Checks whether Viking jumps
     private static final int AxeReloadTime = 30;
     private int axeDelayCount = 100;
-    
+    private int vikingX = 40;
     
     /**
      * Act - do whatever the Viking wants to do. This method is called whenever
@@ -205,33 +205,25 @@ public class Viking extends Actor
     /**
      * Return a boolean value for conditional statement
      */
-    public boolean hit()
+    public void hit()
     {
+        MyWorld world = (MyWorld) getWorld();   
         if(this.isTouching(Sword.class) ) //checks whether Viking has been hit by a sword
         {
-            return true;
+            world.addObject(new VikingLifeEater(), vikingX, 40); //position lifeEater to eat life
+            vikingX += 50;
         }
-        return false;
     }
     
-    private int vikingX = 40;
     /**
      * Ends game when life points are gone
      */
     public void death()
     {
-        ValkyrieLifeEater lifeEater = new ValkyrieLifeEater(); //Destroy a life when
-        World world0 = getWorld();                         // conditions are met 
-        if(hit() )                                       
+        VikingLifeEater eater = new VikingLifeEater(); //Destroy a life when
+        MyWorld world = (MyWorld) getWorld();                     // conditions are met 
+        if(eater.returnCount() == 3 ) //ends game when life points are gone
         {
-            world0.addObject(lifeEater, vikingX, 40);
-            //position lifeEater to eat life
-            lifeEater.removeLife(); //removes a life when lifeEater touches a life
-            vikingX += 40;
-        }
-        if(lifeEater.returnCount() == 3 ) //ends game when life points are gone
-        {
-            MyWorld world = (MyWorld) getWorld();
             world.gameOver(); //ends game
         }
     }
@@ -426,6 +418,7 @@ public class Valkyrie extends Actor
     private boolean jumping = false; //checks whether Valkyrie has jumped
     private static final int AxeReloadTime = 30;
     private int axeDelayCount = 100;
+    private int valkyrieX = 1010;
     
     /**
      * Act - do whatever the Viking wants to do. This method is called whenever
@@ -435,6 +428,7 @@ public class Valkyrie extends Actor
     {
         checkFall();
         checkKeys();
+        hit();
         death();
         axeDelayCount++;
     }  
@@ -459,7 +453,7 @@ public class Valkyrie extends Actor
     }
 
     /**
-     * Checks whether Valkyrie is on Ship
+     * Checks whether Valkyrie is on ValkyrieShip
      */
     public boolean onGround()
     {
@@ -562,34 +556,27 @@ public class Valkyrie extends Actor
     /**
      * Return a boolean value for conditional statement
      */
-    public boolean hit()
+    public void hit()
     {
+        MyWorld world = (MyWorld) getWorld();
         if(this.isTouching(Axe.class) ) //checks whether Valkyrie has been hit by a sword
         {
-            return true;
+            world.addObject(new ValkyrieLifeEater(), valkyrieX, 40);
+            //position lifeEater to eat life
+            valkyrieX += 50; //updates position to next Life
         }
-        return false;
     }
 
 
-    private int valkyrieX = 40;
     /**
      * Ends game when life points are gone
      */
     public void death()
-    {
-        ValkyrieLifeEater lifeEater = new ValkyrieLifeEater(); //Destroy a life when
-        World world0 = getWorld();                         // conditions are met 
-        if(hit() )                                       
+    {                                                       
+        MyWorld world = (MyWorld) getWorld(); //variable world holds World
+        ValkyrieLifeEater eater = new ValkyrieLifeEater(); //Create an instance of ValkyrieLifeEater                                                   
+        if(eater.returnCount() == 3 ) //ends game when life points are gone
         {
-            world0.addObject(lifeEater, valkyrieX, 40);
-            //position lifeEater to eat life
-            lifeEater.removeLife(); //removes a life when lifeEater touches a life
-            valkyrieX += 40;
-        }
-        if(lifeEater.returnCount() == 3 ) //ends game when life points are gone
-        {
-            MyWorld world = (MyWorld) getWorld();
             world.gameOver(); //ends game
         }
     }
@@ -679,36 +666,42 @@ VikingShip:
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class VikingShip here.
+ * Write a description of class VikingLifeEater here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class VikingShip extends Actor
+public class VikingLifeEater extends Actor
 {
-    private int speed = 3;
-    
+    private int count;
+
+    /**
+     * Act - do whatever the Viking wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
     public void act() 
     {
-        move();
-        playerOn();
+        removeLife();
     }    
-    public void move()
+    
+    /**
+     * Removes an instance of Life
+     */
+    public void removeLife()
     {
-        World world = getWorld();
-        if(isAtEdge() || this.getX() >= world.getWidth()/2)
+         if( this.isTouching(Life.class) ) //checks if LifeEater is touching Life
         {
-            speed = -speed;
+            this.removeTouching(Life.class); //removes Life when touching LifeEater
+            count++; //increments count by one
         }
-        setLocation(getX() + speed, getY() );
     }
-    public void playerOn()
+
+    /**
+     * return # of times Life is removed
+     */
+    public int returnCount()
     {
-        Actor player = getOneIntersectingObject(Viking.class);
-        if(this.isTouching(Viking.class) && player != null)
-        {
-            player.setLocation(player.getX() + speed, player.getY() );
-        }
+        return count;
     }   
 }
 
@@ -719,37 +712,43 @@ ValkyrieShip:
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class ValkyrieShip here.
+ * Write a description of class ValkyrieLifeEater here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class ValkyrieShip extends Actor
+public class ValkyrieLifeEater extends Actor
 {
-    private int speed = 3;
+    private int count; //count # of times Life is removed
 
+    /**
+     * Act - do whatever the Viking wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
     public void act() 
     {
-        move();
-        playerOn();
-    }    
-    public void move()
+        removeLife();
+    } 
+    
+    /**
+     * Removes an instance of Life
+     */
+    public void removeLife()
     {
-        World world = getWorld();
-        if(isAtEdge() || this.getX() <= world.getWidth()/2)
+        if( this.isTouching(Life.class) ) //checks if LifeEater is touching Life
         {
-                speed = -speed;
+            this.removeTouching(Life.class); //removes Life when touching LifeEater
+            count++; //increments count by one
         }
-        setLocation(getX() + speed, getY() );
     }
-    public void playerOn()
+
+    /**
+     * return # of times Life is removed
+     */
+    public int returnCount()
     {
-        Actor player = getOneIntersectingObject(Valkyrie.class);
-        if(this.isTouching(Valkyrie.class) && player != null)
-        {
-            player.setLocation(player.getX() + speed, player.getY() );
-        }
-    }    
+        return count;
+    }  
 }
 
 -------------------------------------------------------------------------
