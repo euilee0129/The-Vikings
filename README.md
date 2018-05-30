@@ -214,17 +214,20 @@ public class Viking extends Actor
         return false;
     }
     
+    private int vikingX = 40;
     /**
      * Ends game when life points are gone
      */
     public void death()
     {
-        VikingLifeEater lifeEater = new VikingLifeEater(); //Destroy a life when  
-        if(hit() )                                         // conditions are met 
+        ValkyrieLifeEater lifeEater = new ValkyrieLifeEater(); //Destroy a life when
+        World world0 = getWorld();                         // conditions are met 
+        if(hit() )                                       
         {
-            lifeEater.setLocation(lifeEater.getX() - 25, lifeEater.getY() );
-            //position lifeEater next to life
+            world0.addObject(lifeEater, vikingX, 40);
+            //position lifeEater to eat life
             lifeEater.removeLife(); //removes a life when lifeEater touches a life
+            vikingX += 40;
         }
         if(lifeEater.returnCount() == 3 ) //ends game when life points are gone
         {
@@ -568,17 +571,21 @@ public class Valkyrie extends Actor
         return false;
     }
 
+
+    private int valkyrieX = 40;
     /**
      * Ends game when life points are gone
      */
     public void death()
     {
-        ValkyrieLifeEater lifeEater = new ValkyrieLifeEater();  //Destroy a life when  
-        if(hit() )                                         // conditions are met 
+        ValkyrieLifeEater lifeEater = new ValkyrieLifeEater(); //Destroy a life when
+        World world0 = getWorld();                         // conditions are met 
+        if(hit() )                                       
         {
-            lifeEater.setLocation(lifeEater.getX() - 25, lifeEater.getY() );
-            //position lifeEater next to life
+            world0.addObject(lifeEater, valkyrieX, 40);
+            //position lifeEater to eat life
             lifeEater.removeLife(); //removes a life when lifeEater touches a life
+            valkyrieX += 40;
         }
         if(lifeEater.returnCount() == 3 ) //ends game when life points are gone
         {
@@ -759,7 +766,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class VikingLifeEater extends Actor
 {
-    private boolean  hit = false;
+
     private int count;
 
     public void act() 
@@ -771,19 +778,10 @@ public class VikingLifeEater extends Actor
         if( this.isTouching(Life.class) )
         {
             this.removeTouching(Life.class);
-            hit = true;
-            move();
             count++;
         }
     }
-    public void move()
-    {
-        if(hit)
-        {
-            setLocation(this.getX() - 10, this.getY() );
-            hit = false;
-        }
-    }
+
     public int returnCount()
     {
         return count;
@@ -804,31 +802,22 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class ValkyrieLifeEater extends Actor
 {
-    private boolean  hit = false;
     private int count;
 
     public void act() 
     {
         removeLife();
-    }    
+    } 
+    
     public void removeLife()
     {
         if( this.isTouching(Life.class) )
         {
             this.removeTouching(Life.class);
-            hit = true;
-            move();
             count++;
         }
     }
-    public void move()
-    {
-        if(hit)
-        {
-            setLocation(this.getX() + 10, this.getY() );
-            hit = false;
-        }
-    }
+
     public int returnCount()
     {
         return count;
